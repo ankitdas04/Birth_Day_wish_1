@@ -624,7 +624,7 @@
             <h1>Happy Birthday My Love Little Snorlax 💗</h1>
             <div class="greeting"></div>
             <button class="cta-button">Click to Enter Our World 💕</button>
-           
+
         </div>
     </div>
 
@@ -644,7 +644,8 @@
             <div class="reason-counter"></div>
             <div class="ending-section">
                 <div class="teddy-hug">
-                    <img src="./d1.jpg" alt="Teddy Hug" style="max-width: 100%;">
+                    <img src="image/d1.jpg" onerror="this.onerror=null;this.src='d1.jpg';" alt="Teddy Hug"
+                        style="max-width: 100%; border-radius: 20px;">
                 </div>
                 <div class="ending-text">You're the BESTEST ! 💖</div>
             </div>
@@ -669,20 +670,23 @@
 
         <div class="memory-container">
             <div class="memory-card">
-                <img src="pic 1.webp" alt="First Date" class="memory-img">
+                <img src="image/pic 1.webp" onerror="this.onerror=null;this.src='pic 1.webp';" alt="First Date"
+                    class="memory-img">
                 <div class="memory-date">Her Smile Says It All</div>
                 <div class="memory-caption">You’re truly one of the sweetest girls I know, and I feel lucky to have a
                     sis
                     like you.❤️</div>
             </div>
             <div class="memory-card">
-                <img src="pic 2.webp" alt="Beach Day" class="memory-img">
+                <img src="image/pic 2.webp" onerror="this.onerror=null;this.src='pic 2.webp';" alt="Beach Day"
+                    class="memory-img">
                 <div class="memory-date">Together Vibes</div>
                 <div class="memory-caption">May your journey ahead be filled with happiness, success, and endless
                     smiles.😊💕</div>
             </div>
             <div class="memory-card">
-                <img src="gif3.gif " alt="Movie Night" class="memory-img">
+                <img src="image/d1.jpg" onerror="this.onerror=null;this.src='gif3.gif';" alt="Movie Night"
+                    class="memory-img">
                 <div class="memory-date">Pretty Soul</div>
                 <div class="memory-caption">Keep being the amazing person you are—you make every moment brighter.🌸💖
                 </div>
@@ -810,7 +814,7 @@
             text.innerHTML = `${reason.emoji} ${reason.text}`;
             const gifOverlay = document.createElement('div');
             gifOverlay.className = 'gif-overlay';
-            gifOverlay.innerHTML = `<img src="${reason.gif}" alt="Friendship Memory" style="max-height: 200px; border-radius: 10px;">`;
+            gifOverlay.innerHTML = `<img src="Gif/${reason.gif}" onerror="this.onerror=null;this.src='${reason.gif}';" alt="Friendship Memory" style="max-height: 200px; border-radius: 10px;">`;
             card.appendChild(text); card.appendChild(gifOverlay);
             gsap.from(card, { opacity: 0, y: 50, duration: 0.5, ease: "back.out" });
             return card;
