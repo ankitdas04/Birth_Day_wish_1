@@ -127,14 +127,17 @@ This repository houses a **multi-scene anime-inspired web experience**, lovingly
 
 ```bash
 📦 Birthday wish 1
- ├── 📜 index.html        # The entire magical portal (HTML + CSS + GSAP Engine)
- ├── 🎬 gif1.gif          # Anime memory motion clip 1
- ├── 🎬 gif2.gif          # Anime memory motion clip 2
- ├── 🎬 gif3.gif          # Anime memory motion clip 3
- ├── 🖼️ pic 1.webp        # Memory photo: "Her Smile Says It All"
- ├── 🖼️ pic 2.webp        # Memory photo: "Together Vibes"
- ├── 🧸 d1.jpg            # Warm Teddy Hug illustration
- └── 📘 README.md         # The sacred Otaku lore scroll (You are here!)
+ ├── 📂 Gif/
+ │   ├── 🎬 gif1.gif          # Anime memory motion clip 1
+ │   ├── 🎬 gif2.gif          # Anime memory motion clip 2
+ │   └── 🎬 gif3.gif          # Anime memory motion clip 3
+ ├── 📂 image/
+ │   ├── 🖼️ pic 1.webp        # Memory photo: "Her Smile Says It All"
+ │   ├── 🖼️ pic 2.webp        # Memory photo: "Together Vibes"
+ │   ├── 🧸 d1.jpg            # Warm Teddy Hug illustration
+ │   └── 📝 read.txt          # Image preservation instructions
+ ├── 📜 index.html            # The entire magical portal (HTML + CSS + GSAP Engine)
+ └── 📘 README.md             # The sacred Otaku lore scroll (You are here!)
 ```
 
 ---
