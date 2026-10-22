@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Beautiful Memories ✨</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;400;500;600&family=Bubblegum+Sans&family=Comic+Neue:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Base reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        /* Section Containers */
+        .page-section {
+            display: none;
+            /* Only show active */
+            min-height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .page-active {
+            display: block;
+        }
+
+        /* ----- INDEX PAGE STYLES ----- */
+        #page-index {
+            display: flex;
+            /* Override via JS when active */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(-45deg, #fee9f7, #e8f5fe, #fef2e8, #f0ffe8);
+            background-size: 400% 400%;
+            animation: gradientBG1 15s ease infinite;
+            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG1 {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #page-index .cursor {
+            width: 20px;
+            height: 20px;
+            background: pink;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            transition: transform 0.2s;
+            z-index: 9999;
+        }
+
+        #page-index .container {
+            text-align: center;
+            z-index: 1;
+        }
+
+        #page-index h1 {
+            font-size: 3.5rem;
+            color: #ff69b4;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+            margin-bottom: 2rem;
+            opacity: 0;
+            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+        }
+
+        #page-index .greeting {
+            font-size: 1.5rem;
+            color: #8a2be2;
+            margin-bottom: 3rem;
+            min-height: 2em;
+        }
+
+        #page-index .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff69b4, #ff99cc);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+        }
+
+        #page-index .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
+        }
+
+        .floating {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* ----- CAUSE PAGE STYLES ----- */
+        #page-cause {
+            background: linear-gradient(-45deg, #ffe6e6, #e6e6ff, #ffebf5);
+            background-size: 400% 400%;
+            animation: gradientBG2 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        @keyframes gradientBG2 {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #page-cause .custom-cursor {
+            width: 30px;
+            height: 30px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s;
+        }
+
+        #page-cause .custom-cursor svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 5px rgba(255, 182, 193, 0.5));
+        }
+
+        #page-cause .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 1;
+            position: relative;
+        }
+
+        #page-cause h1 {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 3rem;
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+            margin-bottom: 2rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        #page-cause .reason-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #page-cause .reason-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
+        }
+
+        #page-cause .reason-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        #page-cause .gif-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+        }
+
+        #page-cause .reason-card:hover .gif-overlay {
+            opacity: 1;
+        }
+
+        #page-cause .shuffle-button {
+            background: linear-gradient(45deg, #ff69b4, #ff99cc);
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            color: white;
+            margin: 2rem 0;
+            transition: transform 0.3s;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        #page-cause .shuffle-button:hover {
+            transform: scale(1.1);
+        }
+
+        #page-cause .shuffle-button.story-mode {
+            background: linear-gradient(45deg, #9b6dff, #ff6dc7);
+            transform: scale(1.1);
+        }
+
+        #page-cause .shuffle-button.story-mode:hover {
+            transform: scale(1.2);
+        }
+
+        #page-cause .reason-counter {
+            font-size: 0.9rem;
+            color: #ff69b4;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        #page-cause .ending-section {
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        #page-cause .ending-text {
+            font-family: 'Bubblegum Sans', cursive;
+            font-size: 2rem;
+            color: #ff69b4;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        #page-cause .teddy-hug {
+            width: 200px;
+            margin: 0 auto;
+            transform: scale(0);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .cause-floating {
+            position: fixed;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+            z-index: 99;
+        }
+
+        /* ----- LAST PAGE STYLES ----- */
+        #page-last {
+            background: linear-gradient(135deg, #ffd1dc 0%, #e6e6fa 25%, #ffefd5 50%, #e6e6fa 75%, #ffd1dc 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            color: #4a4a4a;
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #page-last .magic-sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        #page-last .magic-sparkles::before,
+        #page-last .magic-sparkles::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, white 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: sparkleLayer 8s linear infinite;
+            opacity: 0.5;
+        }
+
+        #page-last .magic-sparkles::after {
+            animation-delay: -4s;
+            transform: rotate(45deg);
+        }
+
+        @keyframes sparkleLayer {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-50px);
+            }
+        }
+
+        #page-last .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        #page-last .heart {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 105, 180, 0.6);
+            animation: floatHeart var(--float-duration, 6s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(var(--translate-x, 0), -120vh) rotate(360deg);
+            }
+        }
+
+        #page-last .welcome {
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        #page-last .welcome h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeInScale 2s ease;
+        }
+
+        #page-last .welcome p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1.5rem auto;
+            line-height: 1.6;
+            animation: fadeIn 2s ease 0.5s both;
+        }
+
+        #page-last .memory-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            z-index: 3;
+            position: relative;
+        }
+
+        #page-last .memory-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #page-last .memory-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        #page-last .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        #page-last .memory-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        #page-last .memory-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: transform 0.5s ease;
+        }
+
+        #page-last .memory-card:hover .memory-img {
+            transform: scale(1.05);
+        }
+
+        #page-last .memory-date {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #page-last .memory-caption {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        #page-last .final-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            margin-top: 3rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        #page-last .final-message h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #ff69b4;
+            margin-bottom: 2rem;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        #page-last .final-message p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        #page-last .goodbye-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            animation: btnFloat 3s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        #page-last .goodbye-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        @keyframes btnFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Media queries */
+        @media (max-width: 768px) {
+            #page-index h1 {
+                font-size: 2rem;
+            }
+
+            #page-index .greeting {
+                font-size: 1.2rem;
+            }
+
+            #page-index .cta-button {
+                font-size: 1rem;
+            }
+
+            #page-cause h1 {
+                font-size: 2rem;
+            }
+
+            #page-cause .reason-card {
+                margin: 1rem;
+            }
+
+            #page-cause .reason-text {
+                font-size: 1rem;
+            }
+
+            #page-last .welcome h1 {
+                font-size: 3rem;
+            }
+
+            #page-last .memory-container {
+                grid-template-columns: 1fr;
+            }
+
+            #page-last .final-message h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- INDEX PAGE -->
+    <div id="page-index" class="page-section">
+        <div class="cursor index-cursor"></div>
+        <div class="container">
+            <h1>Happy Birthday My Love Little Snorlax 💗</h1>
+            <div class="greeting"></div>
+            <button class="cta-button">Click to Enter Our World 💕</button>
+           
+        </div>
+    </div>
+
+    <!-- CAUSE PAGE -->
+    <div id="page-cause" class="page-section">
+        <div class="custom-cursor cause-cursor">
+            <svg viewBox="0 0 24 24">
+                <path fill="#ff69b4"
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+        </div>
+
+        <div class="container">
+            <h1>Happy Birthday Little Snorlax 💖</h1>
+            <div id="reasons-container"></div>
+            <button class="shuffle-button">Click Here... 💕</button>
+            <div class="reason-counter"></div>
+            <div class="ending-section">
+                <div class="teddy-hug">
+                    <img src="./d1.jpg" alt="Teddy Hug" style="max-width: 100%;">
+                </div>
+                <div class="ending-text">You're the BESTEST ! 💖</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LAST PAGE -->
+    <div id="page-last" class="page-section">
+        <div class="magic-sparkles"></div>
+        <div class="floating-hearts">
+            <div class="heart" style="--float-duration: 6s; --delay: 0s; --translate-x: 20px;">💝</div>
+            <div class="heart" style="--float-duration: 8s; --delay: 1s; --translate-x: -30px;">💖</div>
+            <div class="heart" style="--float-duration: 7s; --delay: 2s; --translate-x: 40px;">💗</div>
+            <div class="heart" style="--float-duration: 9s; --delay: 3s; --translate-x: -20px;">💓</div>
+            <div class="heart" style="--float-duration: 5s; --delay: 4s; --translate-x: 30px;">💕</div>
+        </div>
+
+        <section class="welcome">
+            <h1>Our Beautiful Moments Together</h1>
+            <p>Every moment spent with you has been magical. Let's cherish these precious memories ...</p>
+        </section>
+
+        <div class="memory-container">
+            <div class="memory-card">
+                <img src="pic 1.webp" alt="First Date" class="memory-img">
+                <div class="memory-date">Her Smile Says It All</div>
+                <div class="memory-caption">You’re truly one of the sweetest girls I know, and I feel lucky to have a
+                    sis
+                    like you.❤️</div>
+            </div>
+            <div class="memory-card">
+                <img src="pic 2.webp" alt="Beach Day" class="memory-img">
+                <div class="memory-date">Together Vibes</div>
+                <div class="memory-caption">May your journey ahead be filled with happiness, success, and endless
+                    smiles.😊💕</div>
+            </div>
+            <div class="memory-card">
+                <img src="gif3.gif " alt="Movie Night" class="memory-img">
+                <div class="memory-date">Pretty Soul</div>
+                <div class="memory-caption">Keep being the amazing person you are—you make every moment brighter.🌸💖
+                </div>
+            </div>
+        </div>
+
+        <section class="final-message">
+            <h2>Thank You for the Memories</h2>
+            <p>“🌹I really love you, and I want to spend my life with you.”<br>
+                “💖Life feels better with you. Will you stay with me forever?🌹”<br>
+                “💍You are my person. Marry me.💍”<br>
+                “💖I am happiest when I am with you. Always?💖”<br>
+                “✨I do not need big words. Just you.✨”<br>
+                “🌹Let us choose each other every day.💖”<br>
+                “This feels right because it is us.✨”<br>
+                “I want you by my side for life.💖”<br>
+                <br>
+                “🎂happy birthday to my cutie little snorlax 🎂”
+            </p>
+            <button class="goodbye-btn" id="restart-btn">Love You Byeeeeeeee 💝</button>
+        </section>
+    </div>
+
+    <script>
+        // --- STATE MANAGER ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => {
+                p.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+            if (pageId === 'page-index') document.getElementById('page-index').style.display = 'flex';
+            window.scrollTo(0, 0);
+            document.body.style.opacity = 1;
+        }
+
+        // --- PAGE 1 (INDEX) JS ---
+        const indexCursor = document.querySelector('.index-cursor');
+        document.addEventListener('mousemove', (e) => {
+            if (document.getElementById('page-index').style.display !== 'none') {
+                indexCursor.style.left = e.clientX + 'px';
+                indexCursor.style.top = e.clientY + 'px';
+            }
+        });
+
+        const greetingText = "Hey You Know What! You're the most adorable human i ever met! 💖";
+        const greetingElement = document.querySelector('.greeting');
+        let charIndex = 0;
+        function typeGreeting() {
+            if (charIndex < greetingText.length) {
+                greetingElement.textContent += greetingText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeGreeting, 100);
+            }
+        }
+
+        const floatingElements = ['💖', '✨', '🌸', '💫', '💕'];
+        let indexInterval;
+        function createIndexFloating() {
+            if (document.getElementById('page-index').style.display === 'none') return;
+            const element = document.createElement('div');
+            element.className = 'floating';
+            element.textContent = floatingElements[Math.floor(Math.random() * floatingElements.length)];
+            element.style.left = Math.random() * 100 + 'vw';
+            element.style.top = Math.random() * 100 + 'vh';
+            element.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.getElementById('page-index').appendChild(element);
+
+            gsap.to(element, {
+                y: -500,
+                x: Math.random() * 100 - 50,
+                rotation: Math.random() * 360,
+                duration: Math.random() * 5 + 5,
+                opacity: 1,
+                ease: "none",
+                onComplete: () => element.remove()
+            });
+        }
+
+        function initIndex() {
+            showPage('page-index');
+            gsap.to('h1', { opacity: 1, duration: 1, y: 20, ease: "bounce.out" });
+            gsap.to('.cta-button', { opacity: 1, duration: 1, y: -20, ease: "back.out" });
+            greetingElement.textContent = "";
+            charIndex = 0;
+            typeGreeting();
+            if (indexInterval) clearInterval(indexInterval);
+            indexInterval = setInterval(createIndexFloating, 1000);
+        }
+
+        const ctaBtn = document.querySelector('.cta-button');
+        ctaBtn.addEventListener('mouseenter', () => gsap.to(ctaBtn, { scale: 1.1, duration: 0.3 }));
+        ctaBtn.addEventListener('mouseleave', () => gsap.to(ctaBtn, { scale: 1, duration: 0.3 }));
+
+        ctaBtn.addEventListener('click', () => {
+            gsap.to('body', {
+                opacity: 0,
+                duration: 1,
+                onComplete: () => {
+                    clearInterval(indexInterval);
+                    document.querySelectorAll('#page-index .floating').forEach(el => el.remove());
+                    initCause();
+                }
+            });
+        });
+
+        // --- PAGE 2 (CAUSE) JS ---
+        const reasons = [
+            { text: "You’re such a kind and wonderful person, and I feel lucky to share such a good bond with you.And I really love you so much and always will be with you and you are my cutie pie. 💖", emoji: "🌟", gif: "gif1.gif" },
+            { text: "May your day be filled with love, laughter, and endless joy. 🌸 ", emoji: "💗", gif: "gif2.gif" },
+            { text: "Wishing you success, happiness, and everything your heart desires. ✨ ", emoji: "💕", gif: "gif1.gif" },
+            { text: "Stay the amazing girl you are—always spreading positivity around. Have the happiest year ahead! 🥳 ", emoji: "🌟", gif: "gif2.gif" }
+        ];
+        let currentReasonIndex = 0;
+        const reasonsContainer = document.getElementById('reasons-container');
+        const shuffleButton = document.querySelector('.shuffle-button');
+        const reasonCounter = document.querySelector('.reason-counter');
+        let isTransitioning = false;
+        let causeInterval;
+
+        function createReasonCard(reason) {
+            const card = document.createElement('div');
+            card.className = 'reason-card';
+            const text = document.createElement('div');
+            text.className = 'reason-text';
+            text.innerHTML = `${reason.emoji} ${reason.text}`;
+            const gifOverlay = document.createElement('div');
+            gifOverlay.className = 'gif-overlay';
+            gifOverlay.innerHTML = `<img src="${reason.gif}" alt="Friendship Memory" style="max-height: 200px; border-radius: 10px;">`;
+            card.appendChild(text); card.appendChild(gifOverlay);
+            gsap.from(card, { opacity: 0, y: 50, duration: 0.5, ease: "back.out" });
+            return card;
+        }
+
+        function displayNewReason() {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            if (currentReasonIndex < reasons.length) {
+                const card = createReasonCard(reasons[currentReasonIndex]);
+                reasonsContainer.appendChild(card);
+                reasonCounter.textContent = `Reason ${currentReasonIndex + 1} of ${reasons.length}`;
+                currentReasonIndex++;
+                if (currentReasonIndex === reasons.length) {
+                    gsap.to(shuffleButton, {
+                        scale: 1.1,
+                        duration: 0.5,
+                        ease: "elastic.out",
+                        onComplete: () => {
+                            shuffleButton.textContent = "Enter Our Storylane 💫";
+                            shuffleButton.classList.add('story-mode');
+                            shuffleButton.addEventListener('click', enterStorylane);
+                        }
+                    });
+                }
+                createCauseFloatingElement();
+                setTimeout(() => { isTransitioning = false; }, 500);
+            }
+        }
+
+        function enterStorylane() {
+            gsap.to('body', {
+                opacity: 0,
+                duration: 1,
+                onComplete: () => {
+                    shuffleButton.removeEventListener('click', enterStorylane);
+                    clearInterval(causeInterval);
+                    document.querySelectorAll('.cause-floating').forEach(el => el.remove());
+                    initLast();
+                }
+            });
+        }
+
+        shuffleButton.addEventListener('click', () => {
+            if (!shuffleButton.classList.contains('story-mode')) {
+                gsap.to(shuffleButton, { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1 });
+                displayNewReason();
+            }
+        });
+
+        function createCauseFloatingElement() {
+            if (document.getElementById('page-cause').style.display === 'none') return;
+            const elements = ['🌸', '✨', '💖', '🦋', '⭐'];
+            const element = document.createElement('div');
+            element.className = 'cause-floating';
+            element.textContent = elements[Math.floor(Math.random() * elements.length)];
+            element.style.left = Math.random() * window.innerWidth + 'px';
+            element.style.top = Math.random() * window.innerHeight + 'px';
+            element.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.getElementById('page-cause').appendChild(element);
+
+            gsap.to(element, {
+                y: -500,
+                duration: Math.random() * 10 + 10,
+                opacity: 0,
+                onComplete: () => element.remove()
+            });
+        }
+
+        const causeCursor = document.querySelector('.cause-cursor');
+        document.addEventListener('mousemove', (e) => {
+            if (document.getElementById('page-cause').style.display !== 'none') {
+                gsap.to(causeCursor, { x: e.clientX - 15, y: e.clientY - 15, duration: 0.2 });
+            }
+        });
+
+        function initCause() {
+            showPage('page-cause');
+            // Reset state if coming from end
+            reasonsContainer.innerHTML = '';
+            currentReasonIndex = 0;
+            reasonCounter.textContent = '';
+            shuffleButton.textContent = 'Click Here... 💕';
+            shuffleButton.classList.remove('story-mode');
+            isTransitioning = false;
+            if (causeInterval) clearInterval(causeInterval);
+            causeInterval = setInterval(createCauseFloatingElement, 2000);
+        }
+
+        // --- PAGE 3 (LAST) JS ---
+        function initLast() {
+            showPage('page-last');
+        }
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            gsap.to('body', {
+                opacity: 0,
+                duration: 1,
+                onComplete: () => {
+                    initIndex();
+                }
+            });
+        });
+
+        // Start App
+        window.addEventListener('load', () => {
+            initIndex();
+        });
+    </script>
+</body>
+
+</html>
